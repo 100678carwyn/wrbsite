@@ -1,122 +1,27 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>Thanh toán</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    .product-line {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-    .product-line span {
-      display: inline-block;
-      width: 60%;
-    }
-    .product-line .price {
-      text-align: right;
-      width: 35%;
-    }
-    .total {
-      text-align: right;
-      font-size: 20px;
-      color: red;
-      margin-top: 20px;
-    }
-    .section {
-      margin-top: 30px;
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-    input[type="text"], input[type="tel"] {
-      width: 100%;
-      padding: 8px;
-      font-size: 16px;
-    }
-    .payment-methods label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    .submit-btn {
-      margin-top: 20px;
-      display: block;
-      width: 100%;
-      padding: 12px;
-      background: #4CAF50;
-      color: white;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Trang Thanh Toán</title>
 </head>
 <body>
-
-  <h1>THANH TOÁN</h1>
-
-  <div class="section">
-    <h2>Giỏ hàng của bạn</h2>
-    <div id="cartItems"></div>
-    <div class="total">Tổng: <span id="totalPrice">0 VND</span></div>
-  </div>
-
-  <div class="section">
-    <h3>Phương thức thanh toán</h3>
-    <div class="payment-methods">
-      <label><input type="radio" name="payment" checked> Thanh toán khi nhận hàng</label>
-      <label><input type="radio" name="payment"> Thanh toán qua Momo</label>
-      <label><input type="radio" name="payment"> Thanh toán qua Ngân hàng</label>
-    </div>
-  </div>
-
-  <div class="section">
-    <h3>Thông tin khách hàng</h3>
-    <form id="orderForm" onsubmit="submitOrder(event)">
-      <label>Họ và tên *</label>
-      <input type="text" required>
-
-      <label>Số điện thoại *</label>
-      <input type="tel" required>
-
-      <button type="submit" class="submit-btn">Gửi đơn hàng</button>
-    </form>
-  </div>
+  <h1>Xác nhận đơn hàng</h1>
+  <ul id="order-items"></ul>
+  <p><strong>Tổng tiền: <span id="order-total">0</span>đ</strong></p>
 
   <script>
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const cartContainer = document.getElementById('cartItems');
-    const totalPriceElem = document.getElementById('totalPrice');
-
     let total = 0;
+    const list = document.getElementById('order-items');
 
     cart.forEach(item => {
-      const line = document.createElement('div');
-      line.className = 'product-line';
-      line.innerHTML = \`<span>\${item.name} x \${item.qty}</span><div class="price">\${(item.price * item.qty).toLocaleString('vi-VN')} VND</div>\`;
-      cartContainer.appendChild(line);
-      total += item.price * item.qty;
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
+      list.appendChild(li);
+      total += item.price;
     });
 
-    totalPriceElem.textContent = total.toLocaleString('vi-VN') + ' VND';
-
-    function submitOrder(e) {
-      e.preventDefault();
-      alert('Đơn hàng của bạn đã được gửi thành công!');
-      localStorage.removeItem('cart');
-      location.reload();
-    }
+    document.getElementById('order-total').textContent = total.toLocaleString();
   </script>
-
 </body>
 </html>
