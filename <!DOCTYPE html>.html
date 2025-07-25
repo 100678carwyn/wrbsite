@@ -2,68 +2,70 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Giỏ hàng TRESSÉ</title>
+  <title>Trang Sản Phẩm</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    .product { border: 1px solid #ccc; margin: 10px 0; padding: 10px; }
-    #cart { margin-top: 30px; border-top: 2px solid black; padding-top: 10px; }
-    button { margin-top: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .product {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+    button {
+      padding: 8px 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .checkout-link {
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
-  <h1>Sản phẩm TRESSÉ</h1>
+
+  <h1>Sản phẩm của TRESSÉ</h1>
 
   <div class="product">
-    <h3>Dầu gội phục hồi</h3>
-    <p>Giá: 150.000đ</p>
-    <button onclick="addToCart('Dầu gội phục hồi', 150000)">Thêm vào giỏ</button>
+    <h3>Dầu gội phục hồi TRESSÉ</h3>
+    <p>Giá: 120.000đ</p>
+    <button onclick="addToCart('Dầu gội phục hồi TRESSÉ', 120000)">Thêm vào giỏ hàng</button>
+  </div>
+
+  <div class="product">
+    <h3>Serum dưỡng tóc TRESSÉ</h3>
+    <p>Giá: 180.000đ</p>
+    <button onclick="addToCart('Serum dưỡng tóc TRESSÉ', 180000)">Thêm vào giỏ hàng</button>
   </div>
 
   <div class="product">
     <h3>Thuốc nhuộm nâu trà sữa</h3>
-    <p>Giá: 200.000đ</p>
-    <button onclick="addToCart('Nhuộm nâu trà sữa', 200000)">Thêm vào giỏ</button>
+    <p>Giá: 150.000đ</p>
+    <button onclick="addToCart('Thuốc nhuộm nâu trà sữa', 150000)">Thêm vào giỏ hàng</button>
   </div>
 
-  <div class="product">
-    <h3>Dưỡng tóc bóng mượt</h3>
-    <p>Giá: 180.000đ</p>
-    <button onclick="addToCart('Dưỡng tóc bóng mượt', 180000)">Thêm vào giỏ</button>
-  </div>
-
-  <div id="cart">
-    <h2>Giỏ hàng</h2>
-    <ul id="cart-items"></ul>
-    <p><strong>Tổng cộng: <span id="total">0</span>đ</strong></p>
-    <button onclick="goToCheckout()">Thanh toán</button>
+  <div class="checkout-link">
+    <a href="checkout_page.html" target="_blank">
+      <button style="background-color: #28a745;">Xem giỏ hàng / Thanh toán</button>
+    </a>
   </div>
 
   <script>
-    const cart = [];
-
     function addToCart(name, price) {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
       cart.push({ name, price });
-      updateCartDisplay();
-    }
-
-    function updateCartDisplay() {
-      const list = document.getElementById('cart-items');
-      list.innerHTML = '';
-      let total = 0;
-      cart.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name} - ${item.price.toLocaleString()}đ`;
-        list.appendChild(li);
-        total += item.price;
-      });
-      document.getElementById('total').textContent = total.toLocaleString();
-    }
-
-    function goToCheckout() {
-      // Gửi dữ liệu giỏ hàng qua URL hoặc localStorage
       localStorage.setItem('cart', JSON.stringify(cart));
-      window.location.href = "checkout_page.html";
+      alert(`${name} đã được thêm vào giỏ hàng!`);
     }
   </script>
+
 </body>
 </html>
